@@ -4,7 +4,6 @@
   padding: 0;
 }
 
-
 @font-face {
   font-family: 'Playfair Display';
   src: url('fonts/PlayfairDisplay-Bold.woff2') format('woff2');
@@ -19,6 +18,32 @@
   --accent: #ff9f5a;
   --text: #f1eefa;
   --muted: #a39cc0;
+
+
+  --on-accent: #14101f;
+  --accent-hover: #ffb97f;
+  --border: #2f2750;
+  --row: #2a2147;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --error: #ff8a9a;
+  --success: #7ddc9a;
+}
+
+
+:root.light {
+  --bg: #faf7ff;
+  --card: #ffffff;
+  --accent: #b84f08;
+  --text: #1d1730;
+  --muted: #5d5580;
+
+  --on-accent: #ffffff;
+  --accent-hover: #9c4106;
+  --border: #ddd6f0;
+  --row: #efe9fb;
+  --shadow: rgba(40, 20, 80, 0.18);
+  --error: #b3162f;
+  --success: #17692f;
 }
 
 
@@ -27,8 +52,7 @@
   --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
-
-:root[data-font="alt"] {
+:root.font-alt {
   --font-body: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
@@ -51,11 +75,10 @@ h3,
   font-family: var(--font-heading);
 }
 
-
-button {
+button,
+input {
   font-family: var(--font-body);
 }
-
 
 .nav a,
 .btn,
@@ -121,14 +144,21 @@ a {
   border-bottom-color: var(--accent);
 }
 
+/* Менші кнопки перемикачів у навігації */
+.nav .btn {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
 .main {
   display: grid;
   grid-template-columns: 320px 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto;
   grid-template-areas:
-    "cover   info"
-    "tracks  tracks"
-    "credits credits";
+    "cover     info"
+    "tracks    tracks"
+    "credits   credits"
+    "subscribe subscribe";
   gap: 32px;
   max-width: 1100px;
   width: 100%;
@@ -153,12 +183,16 @@ a {
   grid-area: credits;
 }
 
+.subscribe {
+  grid-area: subscribe;
+}
+
 .cover-img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px var(--shadow);
   transition: transform 0.4s;
 }
 
@@ -169,7 +203,7 @@ a {
 .badge {
   display: inline-block;
   background-color: var(--accent);
-  color: #14101f;
+  color: var(--on-accent);
   font-size: 13px;
   font-weight: bold;
   padding: 4px 12px;
@@ -225,21 +259,26 @@ a {
 
 .btn:hover {
   background-color: var(--accent);
-  color: #14101f;
+  color: var(--on-accent);
   transform: translateY(-3px);
 }
 
 .btn-primary {
   background-color: var(--accent);
-  color: #14101f;
+  color: var(--on-accent);
 }
 
 .btn-primary:hover {
-  background-color: #ffb97f;
+  background-color: var(--accent-hover);
 }
 
 .btn-icon {
   fill: currentColor;
+}
+
+.like-btn.liked {
+  background-color: var(--accent);
+  color: var(--on-accent);
 }
 
 h2 {
@@ -259,11 +298,11 @@ h2 {
 .tracks td {
   padding: 12px 16px;
   text-align: left;
-  border-bottom: 1px solid #2f2750;
+  border-bottom: 1px solid var(--border);
 }
 
 .tracks thead th {
-  background-color: #2a2147;
+  background-color: var(--row);
   color: var(--accent);
 }
 
@@ -271,7 +310,7 @@ h2 {
   text-align: center;
   color: var(--accent);
   font-size: 20px;
-  border-right: 1px solid #2f2750;
+  border-right: 1px solid var(--border);
 }
 
 .tracks tbody tr {
@@ -279,7 +318,7 @@ h2 {
 }
 
 .tracks tbody tr:hover {
-  background-color: #2a2147;
+  background-color: var(--row);
 }
 
 .tracks tfoot td {
@@ -309,6 +348,55 @@ h2 {
 
 .credits-list li:hover {
   transform: translateY(-4px);
+}
+
+.subscribe-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+  background-color: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: var(--text);
+  background-color: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.error-text {
+  min-height: 1.6em;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--error);
+}
+
+.subscribe-form .btn {
+  justify-self: start;
+}
+
+.form-status {
+  align-self: center;
+  color: var(--success);
 }
 
 .player {
@@ -375,7 +463,8 @@ h2 {
       "cover"
       "info"
       "tracks"
-      "credits";
+      "credits"
+      "subscribe";
   }
 
   .cover {
@@ -389,11 +478,21 @@ h2 {
     padding: 16px;
   }
 
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+  }
+
   .title {
     font-size: 36px;
   }
 
   .credits-list {
+    grid-template-columns: 1fr;
+  }
+
+  .subscribe-form {
     grid-template-columns: 1fr;
   }
 
