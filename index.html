@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lovestruck — Once Broken Heart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +24,7 @@
       <a href="#about">About</a>
       <a href="#tracklist">Tracklist</a>
       <a href="#credits">Credits</a>
+      <button class="btn font-toggle" type="button" id="font-toggle">Font: Inter</button>
     </nav>
   </header>
 
@@ -136,6 +140,21 @@
       Your browser does not support the audio element.
     </audio>
   </footer>
+
+  <script>
+    const root = document.documentElement;
+    const fontBtn = document.getElementById('font-toggle');
+
+    fontBtn.addEventListener('click', () => {
+      if (root.dataset.font === 'alt') {
+        delete root.dataset.font;
+        fontBtn.textContent = 'Font: Inter';
+      } else {
+        root.dataset.font = 'alt';
+        fontBtn.textContent = 'Font: Montserrat';
+      }
+    });
+  </script>
 
 </body>
 </html>
