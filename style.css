@@ -502,3 +502,9 @@ h2 {
     padding: 10px 16px;
   }
 }
+
+.form-status {
+  align-self: center;
+  color: var(--success);
+  overflow-wrap: anywhere;
+}

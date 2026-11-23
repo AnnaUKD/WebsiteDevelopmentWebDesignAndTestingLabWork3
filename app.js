@@ -1,3 +1,16 @@
+function validateName(value) {
+  return typeof value === 'string' && value.trim().length >= 2;
+}
+
+// Email is valid if it looks like "something@something.something" (no spaces).
+function validateEmail(value) {
+  if (typeof value !== 'string') {
+    return false;
+  }
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+
 const html = document.querySelector('html');
 
 
@@ -20,9 +33,9 @@ const likeCount = document.querySelector('.like-count');
 let likes = 0;
 
 likeBtn.addEventListener('click', function () {
-  likes = likes + 1;                  
-  likeCount.textContent = likes;      
-  likeBtn.classList.add('liked');    
+  likes = likes + 1;
+  likeCount.textContent = likes;
+  likeBtn.classList.add('liked');
 });
 
 
@@ -45,12 +58,12 @@ form.addEventListener('submit', function (event) {
 
   let isValid = true;
 
-  if (name.length < 2) {
+  if (!validateName(name)) {
     nameError.textContent = 'Please enter your name (at least 2 letters).';
     isValid = false;
   }
 
-  if (!email.includes('@') || !email.includes('.')) {
+  if (!validateEmail(email)) {
     emailError.textContent = 'Please enter a valid email.';
     isValid = false;
   }
@@ -59,6 +72,6 @@ form.addEventListener('submit', function (event) {
   if (isValid) {
     formStatus.textContent = 'Thank you, ' + name + '! You are subscribed.';
     alert('Thank you, ' + name + '!');
-    form.reset();   
+    form.reset();
   }
 });
